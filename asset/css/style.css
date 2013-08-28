@@ -1,249 +1,63 @@
 ﻿/*reset*/
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td
-{
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font-weight: inherit;
-    font-style: inherit;
-    font-size: 100%;
-    font-family: inherit;
-    vertical-align: baseline;
-}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
 /* remember to define focus styles! */
-:focus
-{
-    outline: 0;
-}
-body
-{
-    line-height: 1;
-    color: black;
-    background: white;
-}
-ol, ul
-{
-    list-style: none;
-}
+:focus { outline: 0; }
+body { line-height: 1; color: black; background: white; }
+ol, ul { list-style: none; }
 /* tables still need 'cellspacing="0"' in the markup */
-table
-{
-    border-collapse: separate;
-    border-spacing: 0;
-}
-caption, th, td
-{
-    text-align: left;
-    font-weight: normal;
-}
-blockquote:before, blockquote:after, q:before, q:after
-{
-    content: "";
-}
-blockquote, q
-{
-    quotes: "" "";
-}
+table { border-collapse: separate; border-spacing: 0; }
+caption, th, td { text-align: left; font-weight: normal; }
+blockquote:before, blockquote:after, q:before, q:after { content: ""; }
+blockquote, q { quotes: "" ""; }
 
 /*layout*/
-html, body
-{
-    height: 100%;
-}
-html
-{
-    overflow: hidden;
-}
+html, body { height: 100%;  width:100%;}
+body { font: 14px/24px 'microsoft yahei';}
 
-body
-{
-    font: 14px/24px 'microsoft yahei';
-    min-width: 760px;
-    overflow: auto;
-}
+#wrapper {  width:100%; text-align: left; min-width: 1000px;}
+#header { height: 50px; background-color: #028FC4; padding: 20px; }
 
-#wrapper
-{
-    height: 100%;
-    width: 100%;
-    text-align: left;
-}
-#header
-{
-    height: 50px;
-    background-color: #b0b0b0;
-    padding: 20px;
-}
+#header h2 { height: 50px; font-size: 28px; font-weight: bold; color: #fff; margin: 0; padding-top: 10px; }
+#mainNav { background-color: #eee; height: 100%; width: 23%; float: left; zoom:1; }
+#mainNav .version{border-bottom:1px sold #666; }
 
-#header h1
-{
-    margin: 0;
-}
-#mainNav
-{
-    background-color: #eee;
-    height: 100%;
-    width: 23%;
-    float: left;
-}
-
-#content
-{
-    width: 75%;
-    float: right;
-}
-#footer
-{
-    clear: both;
-    background-color: #b0b0b0;
-    padding: 1px 20px;
-}
+#content { width: 75%; float: right; margin-left:20px;zoom:1;}
+#footer { clear: both;  padding: 1px 20px;  margin-top:80px; text-align:center;}
 
 /* menu */
-.menu
-{
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    padding-top: 20px;
-}
-.menu a
-{
-    height: 38px;
-    line-height: 38px;
-    width: 100%;
-    color: #666;
-    text-decoration: none;
-    padding-left: 20px;
-    display: block;
-}
-.menu a:hover
-{
-    background: #028fc4;
-    color: #fff;
-    text-decoration: none;
-}
-.menu .current a
-{
-    width: 100%;
-    border-left: solid #222;
-    padding-left: 16px;
-    height: 38px;
-    line-height: 38px;
-    border-width: 0 0 0 4px;
-    font-weight: 700;
-    color: #333;
-}
-.menu .current a:hover
-{
-    border-left: solid #028fc4;
-    color: #fff;
-    padding-left: 20px;
-}
+.menu { height: 100%; width: 100%; overflow: hidden; padding-top: 20px; }
+.menu a { height: 38px; line-height: 38px; width: 100%; color: #666; text-decoration: none; padding-left: 20px; display: block; }
+.menu a:hover { background: #028fc4; color: #fff; text-decoration: none; }
+.menu .current a { width: 100%; border-left: solid #222; padding-left: 16px; height: 38px; line-height: 38px; border-width: 0 0 0 4px; font-weight: 700; color: #333; }
+.menu .current a:hover { border-left: solid #028fc4; color: #fff; padding-left: 20px; }
 
 /* content */
-.content .title_lv2
-{
-    font-size: 20px;
-    height: 40px;
-    line-height: 40px;
-    font-family: arial;
-    margin-top: 50px;
-}
-.content .title_lv2 span
-{
-    font-size: 16px;
-    color: #666;
-    font-weight: 400;
-    line-height: 30px;
-}
-.content .title_lv2 em
-{
-    font-style: italic;
-    color: #999;
-}
+.content .title_lv2 { font-size: 20px; height: 40px; line-height: 40px; font-family: arial; margin-top: 50px; }
+.content .title_lv2 span { font-size: 16px; color: #666; font-weight: 400; line-height: 30px; }
+.content .title_lv2 em { font-style: italic; color: #999; }
 /*content capation*/
-.caption
-{
-    height: 50px;
-    line-height: 50px;
-    overflow: hidden;
-    border-bottom: 1px solid #e0e0e0;
-    margin: 30px;
-}
-.caption h2
-{  font-weight: bold;
-    font-size: 28px;
-    font-family: arial;
-    float: left;
-    height: 50px;
-    line-height: 50px;
-}
-.caption h2 span
-{
-    font-size: 16px;
-    color: #666;
-    font-weight: 400;
-    line-height: 30px;
-    position: relative;
-    top: -3px;
-}
-.caption h2 em
-{
-    font-style: italic;
-    color: #999;
-}
-.caption .type
-{
-    font-size: 12px;
-    color: #fff;
-    height: 20px;
-    line-height: 20px;
-    width: 65px;
-    text-align: center;
-    float: left;
-    margin: 18px 0 0 10px;
-}
-.caption .static
-{
-    background: #bbb;
-}
-.caption .constructor
-{
-    background: #028fc4;
-}
-.caption .prototype
-{
-    background: #46ca3b;
-}
-.caption .global
-{
-    background: #252525;
-}
-.caption .file
-{
-    float: right;
-    font-size: 13px;
-    color: #666;
-    line-height: 60px;
-    font-family: "Lucida Sans Unicode" , "Lucida Grande" , sans-serif;
-}
-.caption .data_type
-{
-    float: left;
-    font-family: "Lucida Sans Unicode" , "Lucida Grande" , sans-serif;
-    color: #666;
-    font-size: 13px;
-    margin: 2px 0 0 10px;
-}
+.caption { height: 50px; line-height: 50px; overflow: hidden; border-bottom: 1px solid #e0e0e0; margin-top:30px;}
+.caption h2 { font-weight: bold; font-size: 28px; font-family: arial; float: left; height: 50px; line-height: 50px; }
+.caption h2 span { font-size: 16px; color: #666; font-weight: 400; line-height: 30px; position: relative; top: -3px; }
+.caption h2 em { font-style: italic; color: #999; }
+.caption .type { font-size: 12px; color: #fff; height: 20px; line-height: 20px; width: 65px; text-align: center; float: left; margin: 18px 0 0 10px; }
+.caption .static { background: #bbb; }
+.caption .constructor { background: #028fc4; }
+.caption .prototype { background: #46ca3b; }
+.caption .global { background: #252525; }
+.caption .file { float: right; font-size: 13px; color: #666; line-height: 60px; font-family: "Lucida Sans Unicode" , "Lucida Grande" , sans-serif; }
+.caption .data_type { float: left; font-family: "Lucida Sans Unicode" , "Lucida Grande" , sans-serif; color: #666; font-size: 13px; margin: 2px 0 0 10px; }
 /*依赖*/
-.deps{ padding-top:20px;     padding:30px;}
-.deps dt{ font-size:14px; font-weight:700; line-height:30px; }
-.deps dd{ line-height:30px; }
-.deps .false{ color:#ccc; text-decoration:line-through; }
+.deps { padding-top: 20px;  margin-bottom: 30px; }
+.deps dt { font-size: 14px; font-weight: 700; line-height: 30px; }
+.deps dd { line-height: 30px; }
+.deps .false { color: #ccc; text-decoration: line-through; }
+
+/*普通文章*/
+.article_box{ margin: 30px;}
+.article_box p{ padding-bottom:20px; }
 /*参数列表*/
-params_box{ margin-top:30px; } 
+.params_box{  margin-bottom: 30px; } 
 .params_box h5,.returns_box h5,.example_box h5{ line-height:30px; } 
 
 .params_list li,
@@ -253,17 +67,62 @@ params_box{ margin-top:30px; }
 .params_list dd{ float:left; font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif; color:#666; font-size:13px; margin-right:8px; }
 .params_list em{ margin-left:8px; }
 
-.params_desc .type{ font-size:12px; color:#fff; height:20px; line-height:20px; width:45px; text-align:center; float:left; margin:2px 10px 0 0; }
-.params_desc .required{ background:#46ca3b; }
+.params_desc .type{ font-size:12px; color:#eee; height:20px; line-height:20px; width:45px; text-align:center; float:left; margin:2px 10px 0 0; }
+.params_desc .required{ background:#FF5501; }
 .params_desc .optional{ background:#bbb; }
 .params_desc p,
 .returns_box p{ overflow:hidden; *zoom:1; font-size:13px; }
 .params_list li ul{ overflow:hidden; *zoom:1; }
 .params_list li li{ border:0 none; padding-bottom:5px; }
 .params_list li li span{ float:left; margin:2px 10px 0 0; font-size:12px; font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif; }
+/*参数列表 表格*/
+.props_tb{ width:670px; border-collapse:collapse; border-bottom:1px solid #e5e5e5; border-left:1px solid #e5e5e5; margin-top:20px; }
+.props_tb tr td{ line-height:20px; padding:5px 0; text-align:center; border-right:1px solid #e5e5e5; border-bottom:1px solid #e5e5e5; color:#666; font-size:13px; }
+.props_tb tr .t_l{ text-align:left; padding:5px 10px; }
+.props_tb .even td{ background:#eee; }
+.props_tb tr .bg_white{ background:#eee; }
+.props_tb th{ background:#f5f5f5; line-height:40px; border-right:1px solid #e5e5e5; font-weight:700; border-top:2px solid #028fc4; text-align:center; }
+.props_tb p{ line-height:20px; padding:5px 0; color:#666; }
+.props_tb .name{ font-family:arial; color:#333; font-size:14px; }
+.props_tb .type{ font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif; color:#666; }
 
+/*实例*/
+.example_box{ margin-top:30px; margin-bottom:30px; border-top:1px solid #e0e0e0;  }
+.example_box h2 { margin-bottom: 30px; font-weight:bold;}
+.example_box h6{ font-size:12px; line-height:30px; margin-top:5px; }
+.example_box pre{ margin-bottom:20px; }
+.example_box p{ font-size:13px; color:#666; margin-bottom:10px; width:670px; overflow:hidden; }
+.example_box .btn{ padding:0 18px; height:20px; line-height:20px; background:#eaeaea; font-family:"Microsoft yahei",arial; font-size:12px; outline:none; color:#333; text-decoration:none; border:1px solid #acacac; float:left; }
+.example_box .btn:hover{ background:#e0effc; text-decoration:none; }
+.example_box .long_btn{ width:120px; }
 
+/*代码高亮*/
 
-
-
-
+.str { color: #EC7600; }
+.kwd { color: #93C763; }
+.com { color: #66747B; }
+.typ { color: #678CB1; }
+.lit { color: #FACD22; }
+.pun { color: #F1F2F3; }
+.pln { color: #F1F2F3; }
+.tag { color: #8AC763; }
+.atn { color: #E0E2E4; }
+.atv { color: #EC7600; }
+.dec { color: purple; }
+pre.prettyprint { border: 0px solid #888;width:800px; overflow:hidden;}
+ol.linenums { margin-top: 0; margin-bottom: 0; }
+.prettyprint { background: #000; }
+li.L0, li.L1, li.L2, li.L3, li.L4, li.L5, li.L6, li.L7, li.L8, li.L9 { color: #555; list-style-type: none; }
+li.L1, li.L3, li.L5, li.L7, li.L9 { background: #111; }
+@media print {
+    .str { color: #060; }
+    .kwd { color: #006; font-weight: bold; }
+    .com { color: #600; font-style: italic; }
+    .typ { color: #404; font-weight: bold; }
+    .lit { color: #044; }
+    .pun { color: #440; }
+    .pln { color: #000; }
+    .tag { color: #006; font-weight: bold; }
+    .atn { color: #404; }
+    .atv { color: #060; }
+}

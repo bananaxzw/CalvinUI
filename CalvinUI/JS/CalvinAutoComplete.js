@@ -1,5 +1,5 @@
 ﻿/// <reference path="jquery-1.4.1-vsdoc.js" />
-/// <reference path="../../JsLib/json2.js" />
+/// <reference path="json2.js" />
 /// <reference path="CalvinTimeDelayMaker.js" />
 /********************************************************************************************
 * 文件名称:	CalvinAutoComplete.js
@@ -12,6 +12,16 @@
 *
 ********************************************************************************************/
 (function () {
+    var defaults = {
+        min: 1,
+        source: [],
+        dynamicStyle: true,
+        selected: function (event, item) { },
+        dynamicSource: false,
+        ajaxOption:$.ajaxSettings,
+        AutoInput: true,
+        MenuHideAuto: true
+    };
     var styleHelper = {
         SetItemHover: function ($item) {
             $item.addClass("ui-menu-itemHover")
@@ -44,14 +54,20 @@
             var opts = $.data(textBox, 'CalvinAutoComplete.data').options;
             var $loading = GenerateLoading(textBox);
             $loading.show();
-            var key = textBox.value;
+            var key = textBox.value, params;
+            //json数据
+            if (/json/.test(opts.ajaxOption.contentType)) {
+                params =JSON.stringify($.extend({ "key": key }, opts.ajaxOption.data));
+            } else {
+                params = $.param($.extend({ "key": key }, opts.ajaxOption.data));
+            }
             if (opts.dynamicSource) {
                 var xmlhttp = $.ajax({
-                    type: "POST",
+                    type: opts.ajaxOption.type,
                     url: opts.ajaxOption.url,
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: '{"key":"' + key + '"}',
+                    contentType:opts.ajaxOption.contentType,
+                    dataType: opts.ajaxOption.dataType,
+                    data: params,
                     success: function (data) {
                         opts.source = data.length ? data : data.d;
                         var $items = MenuItemHelper._GenrateMenuItems(textBox, otherHelper.FilterOptionSouces(opts, textBox.value), height, width, top, left);
@@ -285,29 +301,16 @@
             return opts.source
         }
     };
-    var defaults = {
-        min: 1,
-        source: [],
-        selected: function (event, item) { },
-        dynamicSource: false,
-        ajaxOption: {
-            url: "",
-            extendData: {},
-            error: function () { }
-        },
-        AutoInput: true,
-        MenuHideAuto: true
-    };
     $.fn.CalvinAutoComplete = function (options, param) {
     return this.each(function () {
             var opts = {};
             var $this = $(this);
             var state = $.data(this, 'CalvinAutoComplete.data');
             if (state) {
-                $.extend(opts, state.options, options);
+                $.extend(true,opts, state.options, options);
                 state.options = opts
             } else {
-                $.extend(opts, defaults, options);
+                $.extend(true,opts, defaults, options);
                 $this.data("CalvinAutoComplete.data", {
                     options: opts,
                     ItemsContainer: null

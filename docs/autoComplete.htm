@@ -3,8 +3,48 @@
 <head>
     <title></title>
     <link href="../asset/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../CalvinUI/CSS/default/autoComplete.css" rel="stylesheet" type="text/css" />
+    <script src="../CalvinUI/JS/jquery.min.js" type="text/javascript"></script>
+    <script src="../CalvinUI/JS/CalvinTimeDelayMaker.js" type="text/javascript"></script>
+    <script src="../CalvinUI/JS/CalvinAutoComplete.js" type="text/javascript"></script>
+    <script src="../asset/prettyCode/prettify.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#basic").CalvinAutoComplete({
+                AutoInput: false,
+                MenuHideAuto: false,
+                min: 1,
+                source: ["许志伟1", "许志伟2", "许志伟3", "许志伟4", "许志伟5"]
+            });
+            $("#TxtEventTest").CalvinAutoComplete({ styleInfo: { width: 250 },
+                min: 1,
+                source: [
+              { "text": "许志伟1", "value": "沙发上" },
+              { "text": "许志伟2", "value": "3" },
+              { "text": "许志伟3", "value": "3" }
+              ],
+                selected: function (event, ui) {
+                    alert(ui.text);
+                    alert(ui.value);
+                }
+            });
+        });
+        $(function () {
+            $("#txtAjax").CalvinAutoComplete({
+                min: 1,
+                dynamicSource: true,
+                ajaxOption: { url: "autoCompleteJson.json", dataType: "json", data:
+                {
+                    name: "xuzhiwei",
+                    age: 11
+                }
+                }
+            });
+        });
+    
+    </script>
 </head>
-<body>
+<body onload="prettyPrint();">
     <div id="wrapper">
         <div id="header">
             <h2>
@@ -18,21 +58,213 @@
             <dl class="deps">
                 <dt>依赖</dt>
                 <dd>
-                    jquery.js</dd>
+                    脚本文件:jquery.js</dd>
             </dl>
+            <div class="params_box">
+                <h5>
+                    参数</h5>
+                <ul class="params_list">
+                    <li>
+                        <dl>
+                            <dt>options</dt>
+                            <dd>
+                                Object</dd>
+                        </dl>
+                        <div class="params_desc">
+                            <span class="type optional">可选</span>
+                            <p>
+                                多选形式的可配置参数。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="article_box">
+                <p>
+                    以下是option参数的说明</p>
+            </div>
+            <table class="props_tb">
+                <colgroup>
+                    <col style="width: 130px" />
+                    <col style="width: 100px" />
+                    <col style="width: 70px" />
+                    <col style="width: 370px" />
+                </colgroup>
+                <thead>
+                    <tr class="even">
+                        <th>
+                            参数
+                        </th>
+                        <th>
+                            数据类型
+                        </th>
+                        <th>
+                            默认值
+                        </th>
+                        <th>
+                            说明
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <b class="name">min</b>
+                        </td>
+                        <td>
+                            <span class="type">Number</span>
+                        </td>
+                        <td>
+                            <span class="normal">1</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                                智能提示的文本长度</p>
+                        </td>
+                    </tr>
+                    <tr class="even">
+                        <td>
+                            <b class="name">source</b>
+                        </td>
+                        <td>
+                            <span class="type">Array</span>
+                        </td>
+                        <td>
+                            <span class="normal">[]</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                                静态数据</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b class="name">dynamicSource</b>
+                        </td>
+                        <td>
+                            <span class="type">Boolen</span>
+                        </td>
+                        <td>
+                            <span class="normal">false</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                                采用ajax形式动态数据(如果是ajax获取数据一定要true)</p>
+                        </td>
+                    </tr>
+                    <tr class="even">
+                        <td>
+                            <b class="name">ajaxOption</b>
+                        </td>
+                        <td>
+                            <span class="type">Object</span>
+                        </td>
+                        <td>
+                            <span class="normal">:$.ajaxSettings</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                                ajax请求参数配置</p>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            <b class="name">selected</b>
+                        </td>
+                        <td>
+                            <span class="type">Function</span>
+                        </td>
+                        <td>
+                            <span class="normal">空函数</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                               2个参数(event,ui),第一个参数是点击事件,第二个参数是点击的项,具有text,value属性 </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class='example_box'>
+                <h2>
+                    实例1</h2>
+                <p>
+                    基本用法 使用静态数据</p>
+                <pre class="prettyprint lang-html linenums">
+&lt;script type="text/javascript"&gt;
+            $("#basic").CalvinAutoComplete({
+                AutoInput: false,
+                MenuHideAuto: false,
+                min: 1,
+                source: ["许志伟1", "许志伟2", "许志伟3", "许志伟4", "许志伟5"]
+            });
+ &lt;/script&gt;
+</pre>
+                <p>
+                    输入"许"看看 可上下键操作</p>
+                <div class="tt mm">
+                    <input id="basic" type="text" />
+                </div>
+            </div>
+            <div class='example_box'>
+                <h2>
+                    实例2</h2>
+                <p>
+                    基本用法 使用事件</p>
+                <pre class="prettyprint lang-html linenums">
+&lt;script type="text/javascript"&gt;
+  $("#TxtEventTest").CalvinAutoComplete({ styleInfo: { width: 250 },
+                min: 1,
+                source: [
+              { "text": "许志伟1", "value": "沙发上" },
+              { "text": "许志伟2", "value": "3" },
+              { "text": "许志伟3", "value": "3" }
+              ],
+                selected: function (event, ui) {
+                    alert(ui.text);
+                    alert(ui.value);
+                }
+            });
+ &lt;/script&gt;
+</pre>
+                <p>
+                    输入"许"看看 可上下键操作</p>
+                <div class="tt mm">
+                    <input id="TxtEventTest" type="text" />
+                </div>
+            </div>
+            <div class='example_box'>
+                <h2>
+                    实例3</h2>
+                <p>
+                    基本用法 获取远程数据</p>
+                <pre class="prettyprint lang-html linenums">
+&lt;script type="text/javascript"&gt;
+ $("#txtAjax").CalvinAutoComplete({
+                min: 1,
+                dynamicSource: true,
+                ajaxOption: { url: "autoCompleteJson.json", dataType: "json", data:
+                {
+                    name: "xuzhiwei",
+                    age: 11
+                }
+                }
+            });
+ &lt;/script&gt;
+</pre>
+                <p>
+                    输入"许"看看 可上下键操作</p>
+                <div>
+                    <input id="txtAjax" type="text" />
+                </div>
+            </div>
         </div>
         <div id="mainNav">
             <ul class="menu">
-                <li><a>autocomplete</a></li>
-                <li><a>autocomplete</a></li>
-                <li><a>autocomplete</a></li>
-                <li><a>autocomplete</a></li>
-                <li><a>autocomplete</a></li>
+                <li class="current"><a>AutoComplete(自动补全)</a></li>
             </ul>
         </div>
         <div id="footer">
             <p>
-                Footer</p>
+                copyright © 2013 CalvinUI</p>
         </div>
     </div>
 </body>
