@@ -31,6 +31,49 @@
         onDrag: function (e) { },
         onStopDrag: function (e) { }
     };
+
+
+    var Boundary = {
+        getContainerBoundary: function (container) {
+            var isWindow = (container == null || container == window || container == document || !container.tagName || (/^(?:body|html)$/i).test(container.tagName));
+            if (isWindow) {
+                container = document.body || document.documentElement;
+            }
+            container = $(container);
+            var borderTopWidth = 0,
+                borderRightWidth = 0,
+                borderBottomWidth = 0,
+                borderLeftWidth = 0,
+                cOffset = container.offset(),
+                cOffsetTop = cOffset.top,
+                cOffsetLeft = cOffset.left;
+
+
+            borderTopWidth = parseFloat(container.css('borderTopWidth'));
+            borderRightWidth = parseFloat(container.css('borderRightWidth'));
+            borderBottomWidth = parseFloat(container.css('borderBottomWidth'));
+            borderLeftWidth = parseFloat(container.css('borderLeftWidth'));
+            return {
+                top: cOffsetTop + borderTopWidth,
+                right: cOffsetLeft + container.outerWidth() - borderRightWidth,
+                left: cOffsetLeft + borderLeftWidth,
+                bottom: cOffsetTop + container.outerHeight() - borderBottomWidth
+            };
+        },
+        getTargetBoundary: function (target) {
+            target = $(target);
+            var cOffset = target.offset(),
+                cOffsetTop = cOffset.top,
+                cOffsetLeft = cOffset.left;
+
+            return {
+                top: cOffsetTop,
+                right: cOffsetLeft + target.outerWidth(),
+                left: cOffsetLeft,
+                bottom: cOffsetTop + target.outerHeight()
+            };
+        }
+    }
     var eventHelper = {
         beginDrag: function (e) {
             var opts = $.data(e.data.target, 'draggable').options;
@@ -61,6 +104,7 @@
                     else {
                         proxy = opts.proxy.call(e.data.target, e.data.target);
                     }
+                  
                     $.data(e.data.target, 'draggable').proxy = proxy;
                 }
                 else {
@@ -281,7 +325,7 @@
             }
             //向下移动 但是移动距离不能超过2者的下边之差
             if (moveY > 0) {
-                moveY = Math.min((ConstrainArea.under - elementArea.under), moveY);
+                moveY = Math.min((ConstrainArea.bottom - elementArea.bottom), moveY);
             }
             else {
                 moveY = Math.max((ConstrainArea.top - elementArea.top), moveY);
@@ -299,7 +343,7 @@
         return this.each(function () {
 
             //handle代表对象拖拉的 手柄的区域 比如有个panel可以设置它的handle为header部位
-            var opts;
+            var opts, $this = $(this);
             var state = $.data(this, 'draggable');
             if (state) {
                 state.handle.unbind('.draggable');
@@ -309,11 +353,11 @@
             }
 
             if (opts.disabled == true) {
-                $(this).css('cursor', 'default');
+                $this.css('cursor', 'default');
                 return;
             }
             if (opts.containment) {
-                $(this).css("margin", "0px");
+                $this.css("margin", "0px");
             }
 
             var handle = null;
@@ -355,9 +399,8 @@
                 $(document).bind('mouseup.draggable', data, eventHelper.endDrag);
                 //计算目标区划 和 限制区划
                 function computeArea(constrain, target) {
-                    var areas = CalvinBase.domHelper.getElementsArea(constrain, target);
-                    data.ConstrainArea = areas[0];
-                    data.targetArea = areas[1];
+                    data.ConstrainArea = Boundary.getContainerBoundary(constrain);
+                    data.targetArea = Boundary.getTargetBoundary(target);
                 }
             };
 

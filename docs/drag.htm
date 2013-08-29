@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../asset/css/style.css" rel="stylesheet" type="text/css" />
+    <script src="../CalvinUI/JS/jquery.min.js" type="text/javascript"></script>
+    <script src="../CalvinUI/JS/CalvinDraggable.js" type="text/javascript"></script>
+    <script src="../asset/prettyCode/prettify.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#drag_basic").CalvinDraggable();
+            $("#drag_container").CalvinDraggable({ containment: document.getElementById("dragContainer") });
+        });
+    
+    </script>
+</head>
+<body onload="prettyPrint();">
+    <div id="wrapper">
+        <div id="header">
+            <h2>
+                CalvinUI</h2>
+        </div>
+        <div id="content">
+            <div class="caption">
+                <h2>
+                    Drag(拖拉)</h2>
+            </div>
+            <dl class="deps">
+                <dt>依赖</dt>
+                <dd>
+                    脚本文件:jquery.js</dd>
+            </dl>
+            <div class="params_box">
+                <h5>
+                    参数</h5>
+                <ul class="params_list">
+                    <li>
+                        <dl>
+                            <dt>options</dt>
+                            <dd>
+                                Object</dd>
+                        </dl>
+                        <div class="params_desc">
+                            <span class="type optional">可选</span>
+                            <p>
+                                多选形式的可配置参数。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="article_box">
+                <p>
+                    以下是option参数的说明</p>
+            </div>
+            <table class="props_tb">
+                <colgroup>
+                    <col style="width: 130px" />
+                    <col style="width: 100px" />
+                    <col style="width: 70px" />
+                    <col style="width: 370px" />
+                </colgroup>
+                <thead>
+                    <tr class="even">
+                        <th>
+                            参数
+                        </th>
+                        <th>
+                            数据类型
+                        </th>
+                        <th>
+                            默认值
+                        </th>
+                        <th>
+                            说明
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <b class="name">containment</b>
+                        </td>
+                        <td>
+                            <span class="type">HTMLDomElement</span>
+                        </td>
+                        <td>
+                            <span class="normal">null</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                                拖拉的限定容器范围</p>
+                        </td>
+                    </tr>
+                    <tr class="even">
+                        <td>
+                            <b class="name">axis</b>
+                        </td>
+                        <td>
+                            <span class="type">string('v'|'h')</span>
+                        </td>
+                        <td>
+                            <span class="normal">null</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                                拖拉的限定方向</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b class="name">handle</b>
+                        </td>
+                        <td>
+                            <span class="type">string</span>
+                        </td>
+                        <td>
+                            <span class="normal">selector|HTMLDOMEelement</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                                拖拉的手柄</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class='example_box'>
+                <h2>
+                    实例1</h2>
+                    <p>基本用法</p>
+                                    <pre class="prettyprint lang-html linenums">
+&lt;script type="text/javascript"&gt;
+$("#drag_basic").CalvinDraggable();
+ &lt;/script&gt;
+</pre>
+                    <div style=" background:#028fc4; height:60px; width:60px;" id="drag_basic"></div>
+            </div>
+            <div class='example_box'>
+                <h2>
+                    实例1</h2>
+                <p>
+                    限定容器</p>
+                <pre class="prettyprint lang-html linenums">
+&lt;script type="text/javascript"&gt;
+  $("#drag_container").CalvinDraggable({ containment: document.getElementById("dragContainer") });
+ &lt;/script&gt;
+</pre>
+                <div style=" width:600px; height:200px; border:1px solid #ccc;" id='dragContainer'>
+                  <div style=" background:#028fc4; height:60px; width:60px;" id="drag_container"></div>
+                </div>
+            </div>
+        </div>
+        <div id="mainNav">
+            <ul class="menu">
+                <li><a>AutoComplete(自动补全)</a></li>
+                <li class="current"><a href='Accordion.htm' target="_self">Accordion(手风琴菜单)</a></li>
+            </ul>
+        </div>
+        <div id="footer">
+            <p>
+                copyright © 2013 CalvinUI</p>
+        </div>
+    </div>
+</body>
+</html>
