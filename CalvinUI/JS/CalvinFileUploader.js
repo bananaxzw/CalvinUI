@@ -1,5 +1,6 @@
 ﻿/// <reference path="jquery-1.4.1-vsdoc.js" />
 /// <reference path="../../JsLib/json2.js" />
+/// <reference path="CalvinUI.Core.js" />
 
 
 /********************************************************************************************
@@ -23,8 +24,14 @@
         }
         return -1;
     }
-    var defaults = { accept:"*", min: 1, source: [], selected: function (event, item) { }, dynamicSource: false, ajaxOption: { url: "", extendData: {} }, AutoInput: true, MenuHideAuto: true };
-
+    function format(str) {
+        var args = arguments;
+        return new String(str).replace(/\{(\d+)\}/g,
+        function (m, i) {
+            i = parseInt(i);
+            return args[i + 1];
+        }).toString();
+    }
     function getFileName(str1) {
         var regstr = /\\/,
         regresult = new RegExp(regstr),
@@ -32,72 +39,127 @@
         fileName = parts[parts.length - 1];
         return fileName.split('.');
     };
-    function checkExsit(name) {
-        var s = false;
-        $("span.fileName", $("ul.addfj_new")).each(function () {
-            if ($(this).text() == name) {
-                s = true;
-                return false;
-            }
-        });
-        $("span.fileName", $("ul.addfj_draft")).each(function () {
-            if ($(this).text() == name) {
-                s = true;
-                return false;
-            }
-        });
-        $("span.fileName", $("ul.addfj_innerfiles")).each(function () {
-            if ($(this).text() == name) {
-                s = true;
-                return false;
-            }
-        });
-        return s;
+
+    var defaults = {
+        itemTemplate: "<li><span class='icon_addfj'></span>" +
+        "<span class='fileName'>{0}</span>&nbsp;&nbsp;" +
+        "<span class='file_delete'><a href='javascript:void(0);'>删除</a></span></li>",
+        existFunction: function (name) {
+            alert("文件" + name + "已经存在");
+        },
+        filesContainer: "#fileList",
+        text: "添加附件"
+
     };
 
 
-    var eventHelper = {
-        addFile: function (input_file) {
-            var filePath = $(input_file).val(), fileName = getFileName(filePath).join(".");
-            if (checkExsit(fileName)) {
-                alert("文件" + fileName + "已经存在");
-                return;
-            }
-            var $s = $("<li><span class='icon_addfj'></span><span class='fileName'>" + fileName + "</span>&nbsp;&nbsp;<span class='file_delete'><a href='javascript:void(0);'>删除</a></span></li>");
-            $("ul.addfj_new").append($s);
-            input_file.name = "email_data";
-            $s.append(input_file);
+
+    var uploaderHelper = {
+
+        create: function (o, options) {
+            var text = "<span class='icon_addfj'></span><span class='blank_addfileContainer'><input class='blank_addfile' type='file' size='1' />" +
+                "</span><a href='javascript:void(0);' class='file_text'>{0}</a>";
+
+            $(o).append($(format(text, options.text)));
+
+
         },
-        changeEvent: function (input) {
-            var input_container = $(input).parent();
-            eventHelper.addFile(input);
-            var $input_temp = $("<input class='email_addfile' type='file' size='1'/>");
+        isexist: function (name, options) {
+            var s = false;
+            $("span.fileName", $(options.filesContainer)).each(function () {
+                if ($(this).text() == name) {
+                    s = true;
+                    return false;
+                }
+            });
+            return s;
+        },
+        createBlankFile: function (input_container, options) {
+            var $input_temp = $("<input class='blank_addfile' type='file' size='1'/>");
             input_container.append($input_temp);
             $input_temp.change(function () {
-                eventHelper.changeEvent(this);
+                uploaderHelper.change(this, options);
             });
+
+        },
+        change: function (input, options) {
+            var input_container = $(input).parent();
+            //添加文件到列表
+            if (uploaderHelper.addfile(input, options)) {
+                //新建一个空文件
+                uploaderHelper.createBlankFile(input_container, options);
+            }
             input = null;
+        },
+        addfile: function (input_file, options) {
+
+            var filePath = $(input_file).val(),
+            fileName = getFileName(filePath).join("."),
+            itemTemplate = options.itemTemplate,
+            filesContainer = options.filesContainer;
+            if (uploaderHelper.isexist(fileName, options)) {
+                options.existFunction.call(input_file, fileName);
+                return false;
+            }
+            var $s = $(format(itemTemplate, fileName));
+            $(filesContainer).append($s);
+            input_file.name = "file_data";
+            $(input_file).css({ position: "", opacity: 0, height: 0, width: 0 });
+            $s.append(input_file);
+            return true;
         }
+
     };
+
+    calvin.Create("calvin.ui", function () {
+
+        this.calvinfileuploader = calvin.Class({
+            init: function (elem, options) {
+                if (typeof elem == "string") {
+                    elem = $(elem).get(0);
+                }
+                if (elem != undefined && elem.nodeName) {
+                    this._init.call(elem, options);
+                }
+            },
+            _init: function (options) {
+                var opts = {};
+                var $this = $(this);
+                var state = $.data(this, 'fileuploader');
+                if (state) {
+                    $.extend(true, opts, state.options, options);
+                    state.options = opts
+                } else {
+                    $.extend(true, opts, defaults, options);
+                    $this.data("fileuploader", {
+                        options: opts
+                    });
+                    var postion = $this.css("position");
+                    if (postion == "static" || postion == "") {
+                        $(this).css({ position: "relative" });
+                    }
+
+                    uploaderHelper.create(this, opts);
+                    //文件选择
+                    $("input.blank_addfile", this).change(function () {
+                        uploaderHelper.change(this, opts);
+                    });
+                    //删除事件 代理 以便新加的东西能实现删除
+                    $(opts.filesContainer).delegate(".file_delete", "click", function () {
+                        $(this).parent().remove();
+                    });
+                }
+            }
+
+        });
+    });
+
+
 
     $.fn.CalvinFileUploader = function (options, param) {
         return this.each(function () {
-            //文件选择
-            $("input.email_addfile").change(function () {
-                eventHelper.changeEvent(this);
-            });
-            //删除事件
-            $("ul.addfj_new").delegate("span.file_delete", "click", function () {
-                $(this).parent().remove();
-            });
-            //删除事件
-            $("ul.addfj_draft").delegate("span.file_delete", "click", function () {
-                $(this).parent().remove();
-            });
-            //删除事件
-            $("ul.addfj_innerfiles").delegate("span.file_delete", "click", function () {
-                $(this).parent().remove();
-            });
+
+            new calvin.ui.calvinfileuploader(this, options);
         });
     };
 })();

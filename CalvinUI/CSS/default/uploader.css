@@ -1,0 +1,37 @@
+﻿.icon_addfj
+{
+    background: url(images/Icons.png) 0px 1px no-repeat;
+    width: 14px;
+    height: 14px;
+    color: #999999;
+    padding-left: 18px;
+}
+.file_text
+{
+    display: inline-block;
+}
+
+.blank_addfileContainer
+{  overflow:hidden;
+    zoom: 1;
+    cursor: pointer;
+    position: absolute;
+    height:15px;
+    width: 66px;
+    background-color: blue;
+    opacity: 0;
+    display: inline-block;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    z-index: 1;
+}
+.blank_addfile
+{
+    cursor: pointer;
+    font-family: Times;
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    font-size: 50px;
+    right: 0px;
+}
