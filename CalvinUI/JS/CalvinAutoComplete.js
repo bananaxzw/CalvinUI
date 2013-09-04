@@ -199,7 +199,7 @@
                         $this.val($newSelectedItem.data("MenuItem.Data").text)
                     }
                 });
-                $this.bind("keyup", CalvinTimeDelayMaker.debounce(100, function (event) {
+                $this.bind("keyup", calvin.CalvinTimeDelayMaker.debounce(100, function (event) {
                     var StyleInfo = styleHelper.GetTextBoxStyle(textBox);
                     var data = $this.data("CalvinAutoComplete.data");
                     switch (event.keyCode) {

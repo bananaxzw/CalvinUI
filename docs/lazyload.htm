@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../asset/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../CalvinUI/CSS/default/accordion_.css" rel="stylesheet" type="text/css" />
+    <script src="../CalvinUI/JS/jquery.min.js" type="text/javascript"></script>
+    <script src="../CalvinUI/JS/CalvinUI.Core.js" type="text/javascript"></script>
+    <script src="../CalvinUI/JS/CalvinLazyLoad.js" type="text/javascript"></script>
+    <script src="../asset/prettyCode/prettify.js" type="text/javascript"></script>
+    <style type="text/css">
+
+        .lazy{ width:600px;overflow:scroll;border:1px solid #ccc;}
+        .lazy table{border-collapse:collapse;}
+        .lazy td{border:1px solid #ccc;text-align:center;padding:20px;background:#FFF;}
+
+        #idLazyContainer{height:250px;*position:relative;}
+        #idLazyContainer table{position:relative;}
+        #idLazyContainer div{width:140px;height:100px;line-height:100px;position:relative;}
+
+        #idLazyContainer2
+        {
+            height: 200px;
+        }
+        #idLazyContainer2 div
+        {
+            width: 140px;
+            height: 100px;
+            line-height: 25px;
+        }
+        #idLazyContainer2 textarea
+        {
+            display: none;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+
+            var i = 0;
+            var container = $("#idLazyContainer2"), lazyTable = container.html();
+            lazyTable = lazyTable.replace(/<div>/ig, '<div><img src="http://images.cnblogs.com/cnblogs_com/xuzhiwei/274587/o_o_loading.gif" />');
+            function Lazy2() {
+                container.html(lazyTable)
+                var elems = $.map($("textarea", container), function (area) { return area.parentNode; }),
+        lazy = new calvin.ui.calvinlazyload(elems,
+        {
+            container: container[0], mode: "cross",
+            onLoadData: function (elem) {
+                elem.innerHTML = elem.getElementsByTagName("textarea")[0].value + (i++);
+            }
+        });
+            }
+            $("#idReset2").click(function () {
+                i = 0;
+                lazy.dispose(); Lazy2();
+            });
+            Lazy2();
+
+        })
+    </script>
+</head>
+<body onload="prettyPrint();">
+    <div id="wrapper">
+        <div id="header">
+            <h2>
+                CalvinUI</h2>
+        </div>
+        <div id="content">
+            <div class="caption">
+                <h2>
+                    LazyLoad(懒加载)</h2>
+                <h3 class="title_lv2">
+                    calvinlazyload( <span>elems, [ <em>options</em> ]</span> )</h3>
+            </div>
+            <dl class="deps">
+                <dt>依赖</dt>
+                 <dd>
+                    脚本文件:CalvinLazyLoad.js</dd>
+            </dl>
+            <div class="params_box">
+                <h5>
+                    参数</h5>
+                <ul class="params_list">
+                    <li>
+                        <dl>
+                            <dt>elems</dt>
+                            <dd>
+                                HTMLNodeList</dd>
+                        </dl>
+                        <div class="params_desc">
+                            <span class="type required">必须</span>
+                            <p>
+                                需要懒加载的元素集合</p>
+                        </div>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>options</dt>
+                            <dd>
+                                Object</dd>
+                        </dl>
+                        <div class="params_desc">
+                            <span class="type optional">可选</span>
+                            <p>
+                                多选形式的可配置参数。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="article_box">
+                <p>
+                    以下是option参数的说明</p>
+            </div>
+            <table class="props_tb">
+                <colgroup>
+                    <col style="width: 130px" />
+                    <col style="width: 100px" />
+                    <col style="width: 70px" />
+                    <col style="width: 370px" />
+                </colgroup>
+                <thead>
+                    <tr class="even">
+                        <th>
+                            参数
+                        </th>
+                        <th>
+                            数据类型
+                        </th>
+                        <th>
+                            默认值
+                        </th>
+                        <th>
+                            说明
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <b class="name">container</b>
+                        </td>
+                        <td>
+                            <span class="type">DomElement</span>
+                        </td>
+                        <td>
+                            <span class="normal">window</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                                懒加载的容器（一般随着这个容器的滚动可见视窗来实现元素的加载）</p>
+                        </td>
+                    </tr>
+                    <tr class="even">
+                        <td>
+                            <b class="name">mode</b>
+                        </td>
+                        <td>
+                            <span class="type">String(horizontal|vertical|cross)</span>
+                        </td>
+                        <td>
+                            <span class="normal">cross</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                                cross正交加载只会加载指定视窗范围内的元素</p>
+                            <p>
+                                horizontal满足水平坐标的元素都加载 一列一列</p>
+                            <p>
+                                vertical垂直方向 满足垂直坐标的元素都加载 一行一行</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b class="name">onLoadData</b>
+                        </td>
+                        <td>
+                            <span class="type">Function</span>
+                        </td>
+                        <td>
+                            <span class="normal">null</span>
+                        </td>
+                        <td class="t_l">
+                            <p>
+                                加载到元素的时候触发的方法事件,第一个参数为elem</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class='example_box'>
+                <h2>
+                    实例</h2>
+                <p>
+                    基本用法</p>
+                <pre class="prettyprint lang-html linenums">
+&lt;script type="text/javascript"&gt;
+ function Lazy2() {
+                container.html(lazyTable)
+                var elems = $.map($("textarea", container), function (area) { return area.parentNode; }),
+                lazy = new calvin.ui.calvinlazyload(elems, {
+                container: container[0], mode: "cross",
+                onLoadData: function (elem) {
+                    elem.innerHTML = elem.getElementsByTagName("textarea")[0].value + (i++);
+                }
+ &lt;/script&gt;
+</pre>
+                <input id="idReset2" type="button" value="重新开始" />
+                <div class="lazy" id="idLazyContainer2">
+                    <table cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td>
+                                <div id="me">
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈x</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈x</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈x</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈x</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈x</a></b></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈sfsaf</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <textarea><b><a href="https://github.com/bananaxzw/CalvinUI">哈哈哈哈</a></b></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="mainNav">
+            <ul class="menu">
+                <li><a href="../index.htm">CalvinUI简介</a></li>
+                <li><a href="Accordion.htm" target="_self">Accordion(手风琴菜单)</a></li>
+                <li><a href="autoComplete.htm" target="_self">AutoComplete(自动补全)</a></li>
+                <li><a href="drag.htm" target="_self">Drag(拖拉)</a></li>
+                <li><a href="drop.htm" target="_self">Drop(拖放)</a></li>
+                <li><a href="sortable.htm" target="_self">Sortable(排序)</a></li>
+                <li><a href="multiUploder.htm" target="_self">multiuploader(多文件上传(beta))</a></li>
+                <li class="current"><a href=lazyload.htm target="_self">lazyload(懒加载)</a></li>
+                <li><a href=imagelazyload.htm target="_self">imagelazyload(图片延迟加载)</a></li>
+            </ul>
+        </div>
+        <div id="footer">
+            <p>
+                copyright © 2013 CalvinUI</p>
+        </div>
+    </div>
+</body>
+</html>

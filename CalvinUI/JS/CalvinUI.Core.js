@@ -76,7 +76,7 @@
             // 重新指定构造函数
             subClass.prototype.constructor = subClass;
             //扩展子类
-            this.extend(subClass.prototype, members);
+            $.extend(subClass.prototype, members);
             return subClass;
 
         }
@@ -91,7 +91,7 @@
         }
 
     };
-    calvin.Create("CalvinTimeDelayMaker", function () {
+    calvin.Create("calvin.CalvinTimeDelayMaker", function () {
         this.throttle = function (delay, action, tail, debounce, ctx) {
             var now = function () {
                 return new Date();
@@ -126,8 +126,39 @@
         }
 
         this.debounce = function (idle, action, tail, ctx) {
-            return CalvinTimeDelayMaker.throttle(idle, action, tail, true, ctx);
+            return calvin.CalvinTimeDelayMaker.throttle(idle, action, tail, true, ctx);
         }
 
-    })
+    });
+    calvin.BodyOrHtmlOrWindow = function (obj) {
+        var isWindow = obj == window || obj == document
+			|| !obj.tagName || (/^(?:body|html)$/i).test(obj.tagName);
+        return isWindow;
+    };
+    calvin.compare = function (obj1, obj2) {
+        if (obj1 == null || obj2 == null) return (obj1 === obj2);
+        return (obj1 == obj2 && obj1.constructor.toString() == obj2.constructor);
+    }
+    calvin.Array = {
+        indexOf: function (arr, obj) {
+            for (var i = 0, len = arr.length; i < len; i++) {
+                if (calvin.compare(arr[i], obj)) return i;
+            }
+            return -1;
+        },
+        remove: function (arr, item) {
+            var index = -1;
+            index = calvin.Array.indexOf(arr, item)
+            while (index >= 0) {
+                if (index >= 0) {
+                    arr.splice(index, 1);
+                }
+                index = calvin.Array.indexOf(arr, item);
+            }
+            return (index >= 0);
+
+        }
+
+    }
+
 })();
