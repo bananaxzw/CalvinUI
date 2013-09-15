@@ -160,7 +160,7 @@
             },
             onDrag: function (e) {
                 var opts = $.data(e.data.target, 'draggable').options;
-                if (opts.containment) {
+                if (opts.containment && e.data.startPosition != 'fixed') {
                     eventHelper.moveInContainment(e);
                 }
                 else {
@@ -182,7 +182,7 @@
             },
             endDrag: function (e) {
                 var opts = $.data(e.data.target, 'draggable').options;
-                if (opts.containment) {
+                if (opts.containment && e.data.startPosition != 'fixed') {
                     eventHelper.moveInContainment(e);
                 }
                 else {
@@ -280,7 +280,7 @@
                 //console.log(left);
                 //如果父元素不是body就加上滚动条
                 if (e.data.parent != document.body) {
-                    if ($.boxModel == true) {
+                    if ($.boxModel == true && e.data.startPosition!='fixed') {
                         left += $(e.data.parent).scrollLeft();
                         top += $(e.data.parent).scrollTop();
                     }
@@ -365,7 +365,7 @@
                 if (typeof opts.handle == 'undefined' || opts.handle == null) {
                     handle = $(this);
                 } else {
-                    handle = (typeof opts.handle == 'string' ? $(opts.handle, this) : handle);
+                    handle = (typeof opts.handle == 'string' ? $(opts.handle, this) : opts.handle);
                 }
                 $.data(this, 'draggable', {
                     options: opts,
@@ -385,9 +385,9 @@
                     if (checkArea(e) == false) return;
                     var $target = $(e.data.target);
                     var position = $target.position(), startLeft = 0, startTop = 0;
-                    if (positiontype == "fixed" || positiontype == "absoult") {
-                        startLeft = position.left;
-                        startTop = position.top;
+                    if (positiontype == "fixed" || positiontype == "absolute") {
+                        startLeft = position.left - (positiontype == "fixed" ? $(document).scrollLeft() : 0);
+                        startTop = position.top - (positiontype == "fixed" ? $(document).scrollTop() : 0);
                     } else {
                         startLeft = parseFloat($target.css("left"));
                         startTop = parseFloat($target.css("top"));
@@ -395,7 +395,7 @@
                         startTop = isNaN(startTop) ? 0 : startTop;
                     }
                     var data = {
-                        startPosition: position,
+                        startPosition: positiontype,
                         startLeft: startLeft,
                         startTop: startTop,
                         left: position.left,

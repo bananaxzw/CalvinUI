@@ -1,24 +1,95 @@
-.dialog-content{
-	overflow:auto;
+.calvinDialog
+{
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    border: 2px solid rgb(170, 170, 170);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    width: 30%;
 }
-.dialog-toolbar{
-	background:#fafafa;
-	padding:2px 5px;
-	border-bottom:1px solid #eee;
+.Dialogfull
+{
+    top: 40%;
+    left: 35%;
 }
-.dialog-tool-separator{
-	float:left;
-	height:24px;
-	border-left:1px solid #ccc;
-	border-right:1px solid #fff;
-	margin:2px 1px;
+
+/*内容区域*/
+.calvinDialog .Dialog_content
+{
+    color: #444;
+    border: 5px solid  rgb(170, 170, 170);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    font-family: "Microsoft yahei" , Arial;
 }
-.dialog-button{
-	border-top:1px solid #eee;
-	background:#fafafa;
-	padding:5px 5px;
-	text-align:right;
+/*标题*/
+.calvinDialog .Dialog_title
+{
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    color: #000000;
+    padding: 0 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #e5e5e5;
+    background: #EAEAEA;
+    border-radius: 4px 4px 0 0;
+    margin-top: 0;
 }
-.dialog-button .l-btn{
-	margin-left:5px;
+/*关闭按钮*/
+.Dialog_title .close_btn
+{
+    font-family: arial;
+    font-size: 18px;
+    _font-size: 12px;
+    font-weight: 700;
+    color: #999;
+    text-decoration: none;
+    float: right;
+}
+
+.Dialog_title .close_btn:hover
+{
+    color: #333;
+}
+
+
+.Dialog_content .Dialog_message
+{
+    padding: 25px 10px;
+    font-size: 13px;
+    line-height: 22px;
+    overflow: auto;
+}
+.Dialog_content .line
+{
+    border-top: 1px solid #CCC;
+}
+.Dialog_content .Dialog_footer
+{
+    background-color: #eaeaea;
+    padding: 5px 12px;
+    text-align: right;
+    line-height: 25px;
+    border-top: 1px solid #ccc;
+}
+
+
+.Dialog_content .Dialog_footer:after
+{
+    content: '';
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    clear: both;
 }
