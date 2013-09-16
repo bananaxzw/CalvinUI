@@ -161,8 +161,8 @@
 
     }
     calvin.ie6 = function () {
-        return $.browser === "msie" && $.browser.version === 6.0;
+        return $.browser.msie && $.browser.version == 6.0;
     };
-   
+
 
 })();

@@ -7,9 +7,11 @@
     <script src="../CalvinUI/JS/CalvinUI.Core.js" type="text/javascript"></script>
     <script src="../CalvinUI/JS/CalvinDraggable.js" type="text/javascript"></script>
     <script src="../asset/prettyCode/prettify.js" type="text/javascript"></script>
+    <link href="../CalvinUI/CSS/default/dialog.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(function () {
             $("#drag_basic").CalvinDraggable();
+          
             $("#drag_container").CalvinDraggable({ containment: document.getElementById("dragContainer") });
             $("#drag_proxy").CalvinDraggable({ proxy: true });
         });
@@ -17,6 +19,7 @@
     </script>
 </head>
 <body onload="prettyPrint();">
+
     <div id="wrapper">
         <div id="header">
             <h2>
@@ -150,7 +153,8 @@
 $("#drag_basic").CalvinDraggable();
  &lt;/script&gt;
 </pre>
-                <div style="background: #028fc4; height: 60px; width: 60px; position:fixed; top:30%; left:50%;" id="drag_basic">
+                <div style="background: #028fc4; height: 60px; width: 60px; position: absolute; top: 1000px;
+                    left: 50%;" id="drag_basic">
                 </div>
             </div>
             <div class='example_box'>
@@ -184,14 +188,14 @@ $("#drag_basic").CalvinDraggable();
         </div>
         <div id="mainNav">
             <ul class="menu">
-                  <li><a  href="../index.htm">CalvinUI简介</a></li>
+                <li><a href="../index.htm">CalvinUI简介</a></li>
                 <li><a href="Accordion.htm" target="_self">Accordion(手风琴菜单)</a></li>
                 <li><a href="autoComplete.htm" target="_self">AutoComplete(自动补全)</a></li>
-                <li   class="current"><a href="drag.htm" target="_self">Drag(拖拉)</a></li>
+                <li class="current"><a href="drag.htm" target="_self">Drag(拖拉)</a></li>
                 <li><a href="drop.htm" target="_self">Drop(拖放)</a></li>
                 <li><a href="sortable.htm" target="_self">Sortable(排序)</a></li>
                 <li><a href="multiUploder.htm" target="_self">multiuploader(多文件上传(beta))</a></li>
-                  <li><a href="lazyload.htm" target="_self">lazyload(懒加载)</a></li>
+                <li><a href="lazyload.htm" target="_self">lazyload(懒加载)</a></li>
                 <li><a href="imagelazyload.htm" target="_self">imagelazyload(图片延迟加载)</a></li>
             </ul>
         </div>

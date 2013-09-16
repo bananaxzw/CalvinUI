@@ -280,7 +280,7 @@
                 //console.log(left);
                 //如果父元素不是body就加上滚动条
                 if (e.data.parent != document.body) {
-                    if ($.boxModel == true && e.data.startPosition!='fixed') {
+                    if ($.boxModel == true && e.data.startPosition != 'fixed') {
                         left += $(e.data.parent).scrollLeft();
                         top += $(e.data.parent).scrollTop();
                     }

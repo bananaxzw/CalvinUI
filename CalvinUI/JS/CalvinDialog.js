@@ -53,12 +53,13 @@ calvin.Create("calvin.ui", function () {
                 }
             }
             $.data(this.elem, "calvindialog", { options: options, ie6: ie6, full: full, container: this.elem });
-            DialogHelper.createMask(this.elem);
-            DialogHelper.wrapDialog(this.elem);
+            // DialogHelper.createMask(this.elem);
+            var id = DialogHelper.wrapDialog(this.elem);
             DialogHelper.setDialogStyle(this.elem);
             if (!options.autoShow) {
                 this.close();
             }
+            $(id).CalvinDraggable({ containment: window, handle: "div.Dialog_title" });
         },
         close: function () {
             DialogHelper.close(this.elem);
@@ -95,6 +96,7 @@ calvin.Create("calvin.ui", function () {
             $dialog.append(dialogContent);
             $dialog.css(opts.dialogCSS);
             if (opts.showTitle) {
+                var dialogid = "#Dialog_title" + id;
                 var dialogTitle = $('<div class="Dialog_title" id=\"Dialog_title' + id + '" style="cursor: move;"><h4 style="float:left;display:inline-block;margin:0;">' + opts.title + '</h4></div>');
                 if (opts.showClose) {
                     var closeBtn = $('<a href="javascript:void(0)" title="关闭窗口" class="close_btn" id="calvinCloseBtn' + id + '">×</a>');
@@ -102,12 +104,11 @@ calvin.Create("calvin.ui", function () {
                         DialogHelper.close(elem);
                     });
                     dialogTitle.prepend(closeBtn);
-
                 }
-
                 dialogContent.append(dialogTitle);
                 if (opts.dragable) {
-                    new calvin.ui.cavindrag($dialog[0], { containment: elem, handle: "div.Dialog_title" });
+                    //$("#calvinDialog" + id).CalvinDraggable({ handle: $(dialogid) });
+                    //new calvin.ui.cavindrag($dialog[0], { containment: window, handle: "div.Dialog_title" });
                 }
                 dialogContent.append("<div class='line'/>");
             }
@@ -117,9 +118,10 @@ calvin.Create("calvin.ui", function () {
 
             //}
             //else {
-                var dialogMessage = $('<div class="Dialog_message"></div>').append(message).width($dialog.width() - 35);
-                dialogContent.append(dialogMessage);
-           // }
+            var dialogMessage = $('<div class="Dialog_message"></div>').append(message);
+            dialogContent.append(dialogMessage);
+            dialogMessage.css(opts.messageCSS);
+            // }
             if (opts.showFooter) {
                 dialogContent.append("<div class='line'/>");
                 var dialogFooter = $('<div class="Dialog_footer">' + opts.footer + '</div>');
@@ -127,7 +129,7 @@ calvin.Create("calvin.ui", function () {
             }
 
             dialogData.$dialog = $dialog;
-
+            return "#calvinDialog" + id;
         },
         createMask: function (elem) {
             var dialogData = $.data(elem, "calvindialog"), opts = dialogData.options;
@@ -139,13 +141,17 @@ calvin.Create("calvin.ui", function () {
 
         },
         setDialogStyle: function (elem) {
-            var dialogData = $.data(elem, "calvindialog");
-            var $dialog = dialogData.$dialog, opts = dialogData.options, full = dialogData.full;
+            var dialogData = $.data(elem, "calvindialog"),
+             $dialog = dialogData.$dialog,
+             opts = dialogData.options,
+             full = dialogData.full;
             //IE6的话 可以采用setExpression来居中消息   其他的可以采用fiexed属性来居中
             if (calvin.ie6() && full) {
                 $dialog.css("position", 'absolute');
-                $dialog.get(0).style.setExpression('top', '(document.documentElement.clientHeight || document.body.clientHeight) / 2 - (this.offsetHeight / 2) + (document.documentElement.scrollTop||document.body.scrollTop) + "px"');
-                $dialog.get(0).style.setExpression('left', '(document.documentElement.clientWidth || document.body.clientWidth) / 2 - (this.offsetWidth / 2) + (document.documentElement.scrollLeft||document.body.scrollLeft) + "px"');
+                $dialog.get(0).style.top = "1000px";
+                //$dialog.get(0).style.setExpression('top', '(document.documentElement.clientHeight || document.body.clientHeight) / 2 - (this.offsetHeight / 2) + (document.documentElement.scrollTop||document.body.scrollTop) + "px"');
+                //$dialog.get(0).style.setExpression('left', '(document.documentElement.clientWidth || document.body.clientWidth) / 2 - (this.offsetWidth / 2) + (document.documentElement.scrollLeft||document.body.scrollLeft) + "px"');
+
             }
             else if (full) {
                 $dialog.addClass('Dialogfull');
@@ -154,6 +160,24 @@ calvin.Create("calvin.ui", function () {
                 StyleHelper.center($dialog.get(0), opts.centerX, opts.centerY);
             }
 
+            //设置中间消息体的高度
+            var dialogHeight = $dialog.height(), dialogWidth = $dialog.width(),
+            titleHeight = $("div.Dialog_title", $dialog).outerHeight() + 1,
+            footerHeight = $("div.Dialog_footer", $dialog).outerHeight() + 1,
+            $message = $("div.Dialog_message", $dialog),
+            message_paddingV = parseFloat($message.css("paddingTop")) + parseFloat($message.css("paddingBottom")),
+            message_paddingH = parseFloat($message.css("paddingLeft")) + parseFloat($message.css("paddingRight")),
+            message_marginV = parseFloat($message.css("marginTop")) + parseFloat($message.css("marginBottom")),
+            message_marginH = parseFloat($message.css("marginLeft")) + parseFloat($message.css("marginRight")),
+            messageHeight = dialogHeight - message_paddingV - message_marginV;
+            messageWidth = dialogWidth - message_paddingH - message_marginH;
+            if (opts.showTitle) {
+                messageHeight -= titleHeight;
+            }
+            if (opts.showFooter) {
+                messageHeight -= footerHeight;
+            }
+            $("div.Dialog_message", $dialog).height(messageHeight).width(messageWidth);
 
         }
     };
