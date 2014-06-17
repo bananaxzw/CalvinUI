@@ -13,13 +13,14 @@
     <script type="text/javascript">
         $(function () {
             var tt = new calvin.ui.dialog(document.getElementById("ElementContainerDialog"), { dragable: true, message: "中间内容", title: "头部", footer: "底部", zIndex: 10002 });
-            //var tt11 = new calvin.ui.dialog(window, { dialogCSS: { width: 100 }, dragable: true, message: document.getElementById("message"), zIndex: 10002 });
-            var tt12 = new calvin.ui.dialog(window, {messageCSS:{padding:"0px"}, dialogCSS: { width: 400 }, dragable: true, message: document.getElementById("iframeMessage"), zIndex: 10002 });
-            $("#calvinDialogxxxxxx").CalvinDraggable({ handle: $(document.getElementById("Dialog_titleasfas")) });
+            var tt11 = new calvin.ui.dialog(window, { dialogCSS: { width: 100, height: 100 }, dragable: true, message: document.getElementById("message"), zIndex: 10002 });
+            var tt12 = new calvin.ui.dialog(window, { footer: document.getElementById("footersafas"), globalAppend: document.me, messageCSS: { padding: "0px" }, dialogCSS: { top: 20, left: 20, height: 400, width: 800 }, dragable: true, message: document.getElementById("iframeMessage"), zIndex: 10002 });
             $("#btnOpenElement").click(function () {
+                tt.setTitle("sfsafsa");
                 tt.open();
             });
             $("#btnCloseElment").click(function () {
+   
                 tt.close();
             });
 
@@ -35,7 +36,7 @@
     </script>
 </head>
 <body onload="prettyPrint();">
- 
+    <form id="me" name='me' style=" height:100%;">
     <div id="wrapper">
         <div id="header">
             <h2>
@@ -214,8 +215,8 @@
                 }
  &lt;/script&gt;
 </pre>
-                <div id="message" style=" display:none;">
-                <img src=ajax-loader.gif />
+                <div id="message">
+                    <img src="ajax-loader.gif" />
                 </div>
                 <input id="Button1" type="button" value="运行" />
             </div>
@@ -236,9 +237,12 @@
                 }
  &lt;/script&gt;
 </pre>
-                <div id="iframeMessage" style=" width:100%; height:100%; overflow:hidden;">
-                saf
-                <iframe src="dialogIframeContent.html" scrolling="auto"  style="width:100%; height:100%;"></iframe>
+                <div id="iframeMessage" style="width: 100%; height: 100%; overflow: hidden;">
+                  <iframe src="dialogIframeContent.html" scrolling="auto"  style="width:100%; height:100%;"></iframe>
+                </div>
+                <div id="footersafas">
+                <input type=button value="确定" />
+                 <input type=button value="取消" />
                 </div>
                 <input id="Button2" type="button" value="运行" />
             </div>
@@ -261,5 +265,7 @@
                 copyright © 2013 CalvinUI</p>
         </div>
     </div>
+
+    </form>
 </body>
 </html>

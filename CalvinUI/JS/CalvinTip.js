@@ -1,6 +1,5 @@
 ﻿/// <reference path="jquery-1.4.1-vsdoc.js" />
-/// <reference path="../../JsLib/jq1.72.js" />
-/// <reference path="CalvinAutoComplete.js" />
+/// <reference path="CalvinUI.Core.js" />
 /********************************************************************************************
 * 文件名称:	
 * 设计人员:	许志伟 
@@ -12,10 +11,9 @@
 *
 ********************************************************************************************/
 (function () {
-
-
-    function formtoolTip(options) {
-        var html = "<div  class='tooltip tooltip-" + options.arrow + "'>" +
+    calvin.Create("calvin.ui", function () {
+        function formToolTip(options) {
+            var html = "<div  class='tooltip tooltip-" + options.arrow + "'>" +
         "<div class='tooltip-arrow tooltip-arrow-" + options.arrow.charAt(0) + "'>" +
         "</div>" +
          "<div class='tooltip-arrow tooltip-arrow-in-" + options.arrow.charAt(0) + "'>" +
@@ -23,11 +21,11 @@
         "<div class='tooltip-inner'>" + options.content +
          "</div>" +
         "</div>";
-        var $toolTip = $(html);
-        $(document.body).append($toolTip);
-        return $toolTip;
-    }
-    var ItemHelper =
+            var $toolTip = $(html);
+            $(document.body).append($toolTip);
+            return $toolTip;
+        }
+        var ItemHelper =
     {
         show: function (elem) {
             var cacheData = $.data(elem, "CalvinToolTip.data"),
@@ -35,6 +33,7 @@
              $tip = cacheData.$toolTip,
              arrow = cacheData.options.arrow,
              options = cacheData.options;
+            $tip.show();
             var pos = $.extend({}, $element.offset(), {
                 width: elem.offsetWidth,
                 height: elem.offsetHeight
@@ -74,40 +73,48 @@
 
     }
 
-    var Defaluts = {
-        arrow: 'n',
-        offset: 0,
-        content: '&nbsp;&nbsp;',
-        show: false
-    };
+        var Defaluts = {
+            arrow: 'n',
+            offset: 0,
+            content: '&nbsp;&nbsp;',
+            show: false
+        };
 
-    $.fn.CalvinToolTip = function (options, param) {
-
-
-        if (typeof options === "string") {
-            switch (options.toUpperCase()) {
-                case "HIDE":
-                    ItemHelper.hide(this.get(0));
-                    return;
-
-            }
-        }
-        return this.each(function () {
-            var opts = {},
+        this.tooltip = calvin.Class({
+            init: function (elem, options) {
+                if (typeof elem == "string") {
+                    elem = $(elem).get(0);
+                }
+                this.elem = elem;
+                if (elem != undefined && elem.nodeName) {
+                    this._init.call(elem, options);
+                }
+            },
+            _init: function (options) {
+                var opts = {},
              $this = $(this),
              state = $.data(this, 'CalvinToolTip.data');
-            if (state) {
-                $.extend(opts, state.options, options);
-                state.options = opts;
+                if (state) {
+                    $.extend(opts, state.options, options);
+                    state.options = opts;
+                }
+                else {
+                    $.extend(opts, Defaluts, options);
+                    var $toolTip = formToolTip(opts);
+                    $this.data("CalvinToolTip.data", { options: opts, $toolTip: $toolTip });
+                    ItemHelper.show(this);
+                }
+            },
+            show: function () {
+                ItemHelper.show(this.elem);
+            },
+            hide: function () {
+                ItemHelper.hide(this.elem);
             }
-            else {
-                $.extend(opts, Defaluts, options);
-                var $toolTip = formtoolTip(opts);
-                $this.data("CalvinToolTip.data", { options: opts, $toolTip: $toolTip });
-                ItemHelper.show(this);
-            }
+
         });
-    };
+
+    });
 
 })();
 

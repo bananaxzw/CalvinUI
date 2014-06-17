@@ -39,9 +39,6 @@
         margin: 0;
         padding: 0;
         zoom: 1;
-        float: left;
-        clear: left;
-        width: 99%;
     }
 
     .ui-menu .ui-menu-itemHover {

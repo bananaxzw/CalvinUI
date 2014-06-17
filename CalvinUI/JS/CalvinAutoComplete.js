@@ -57,7 +57,8 @@
             }
         };
 
-        var cacheData = { "key": "", "data": [] };
+        var cacheData = { "key": "", "data": [] }, lastInputText = 0;
+
         var MenuItemHelper = {
             GenrateMenuItems: function (textBox, height, width, top, left) {
                 var opts = $.data(textBox, 'CalvinAutoComplete.data').options;
@@ -115,6 +116,7 @@
                 }
             },
             _GenrateMenuItems: function (textBox, SouceArray, height, width, top, left) {
+                lastInputText = textBox.value;
                 var opts = $.data(textBox, 'CalvinAutoComplete.data').options;
                 MenuItemHelper.RemoveMenuItems(textBox);
                 if (SouceArray == null || !SouceArray.length) return;
@@ -236,6 +238,10 @@
                             MenuItemHelper.RemoveMenuItems(textBox);
                             break;
                         case 8:
+                            if (lastInputText!= "" && $this.val() == lastInputText)
+                            {
+                                return;
+                            }
                             var minLength = opts.min;
                             if ($this.val().length >= minLength) {
                                 MenuItemHelper.GenrateMenuItems(this, StyleInfo.height, StyleInfo.width, StyleInfo.top, StyleInfo.left)
@@ -244,14 +250,18 @@
                             }
                             break;
                         default:
+                            if (lastInputText != "" && $this.val() == lastInputText) {
+                                return;
+                            }
                             var minLength = opts.min;
                             if ($this.val().length >= minLength) {
                                 MenuItemHelper.GenrateMenuItems(this, StyleInfo.height, StyleInfo.width, StyleInfo.top, StyleInfo.left)
-                            }
+                            };
                             break
                     }
-                }, false))
+                }, false));
             },
+
             SetItemClickEvent: function ($MenuItem, $textBox) {
                 var opts = $textBox.data('CalvinAutoComplete.data').options;
                 var ItemData = $MenuItem.data("MenuItem.Data");

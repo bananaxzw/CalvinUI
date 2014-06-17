@@ -18,9 +18,10 @@
     </style>
     <script type="text/javascript">
         $(function () {
-            $("#ulbasic,#ul1").CalvinSortable();
-        
-         })
+            $("#ulbasic").CalvinSortable({ connectWith: "#ul1" });
+            $("#ul1").CalvinSortable();
+
+        })
        
     </script>
 </head>
@@ -65,8 +66,8 @@ $("#drag_basic").CalvinDraggable();
                 </ul>
                 <br />
                 <br />
-                <ul class="twoCol" id="ul1">
-                    <li>A</li>
+                <ul class="twoCol" id="ul1" style="height:200px;">
+                  <li>A</li>
                     <li>B</li>
                     <li>C</li>
                     <li>D</li>

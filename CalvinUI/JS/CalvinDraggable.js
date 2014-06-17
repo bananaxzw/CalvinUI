@@ -25,6 +25,8 @@
             disabled: false,
             //可拖动的偏移量
             edge: 0,
+            //拖动偏移
+
             //移动限制 只能在某个范围内移动 值为Dom元素
             containment: null,
             axis: null, // v or h

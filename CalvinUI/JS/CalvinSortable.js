@@ -5,7 +5,9 @@
 ;
 (function () {
     calvin.Create("calvin.ui", function () {
-        var defaults = {};
+        var defaults = {
+            connectWith: null
+        };
         var sortHelper = {
             startDrag: function (e) {
                 $(this).css({
@@ -26,10 +28,23 @@
             },
             enter: function (e, drag) {
                 var $dropElem = $(this),
+                dropParentNode = this.parentNode,
                 $dragElem = $(drag),
+                dragParentNode = drag.parentNode,
                 dragIndex = $dragElem.index(),
-                dropIndex = $dropElem.index();
-                $dropElem[dragIndex < dropIndex ? 'after' : 'before']($dragElem);
+                dropIndex = $dropElem.index(),
+                connect = $dropElem.data('sortConnect');
+
+                if (dropParentNode == dragParentNode) {
+                    $dropElem[dragIndex < dropIndex ? 'after' : 'before']($dragElem);
+                }
+                else if (connect && $(dragParentNode).filter(connect).length > 0) {
+                    $dropElem.before($dragElem);
+                    $dragElem.data('sortConnect', connect);
+                }
+                else {
+                    return;
+                }
 
             }
         };
@@ -44,18 +59,16 @@
                 }
             },
             _init: function (options) {
-                var state = $.data(this, 'sortable');
-
-
+                var state = $.data(this, 'sortable'), options;
                 if (state) {
-                    $.extend(state.options, options);
+                    options = $.extend(state.options, options);
                 } else {
-
+                    options = $.extend({}, defaults, options);
                     $.data(this, 'sortable', {
-                        options: $.extend(defaults, options)
+                        options: options
                     });
                     $(this).children().each(function () {
-
+                        $(this).data("sortConnect", options.connectWith);
                         new calvin.ui.cavindrag(this, {
                             proxy: true,
                             onStartDrag: sortHelper.startDrag,

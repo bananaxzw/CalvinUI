@@ -15,8 +15,8 @@
 }
 .Dialogfull
 {
-    top: 40%;
-    left: 35%;
+    margin: 0 auto;
+     vertical-align:middle;
 }
 
 /*ÄÚÈÝÇøÓò*/
@@ -65,6 +65,7 @@
     font-size: 13px;
     line-height: 22px;
     overflow:hidden;
+    margin: 0px;
 }
 .Dialog_content .line
 {

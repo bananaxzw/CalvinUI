@@ -46,7 +46,7 @@ calvin.Create("calvin.ui", function () {
                 if (position == 'static' || position == "")
                     this.elem.style.position = 'relative';
             }
-            this.ie6 =calvin.ie6(), this.boxModel = $.boxModel;
+            this.ie6 = calvin.ie6(), this.boxModel = $.boxModel;
             this.CreateMask();
             this.SetMaskStyle();
 
@@ -72,7 +72,7 @@ calvin.Create("calvin.ui", function () {
         SetMaskStyle: function () {
             var opts = this.opts;
             //要把body的margin和padding设置为0 不然有滚动条
-            
+
             if (this.full) {
                 $("body").css({ "margin": "0px", "padding": "0px" });
             }
@@ -131,6 +131,9 @@ calvin.Create("calvin.ui", function () {
         showMask: function () {
             this.$lyr1.show();
             this.$lyr2.show();
+        },
+        resize: function () {
+            this.SetMaskStyle();
         }
 
     });
